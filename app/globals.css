@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  background: theme('colors.ink.50');
+  color: theme('colors.ink.900');
+  -webkit-font-smoothing: antialiased;
+}
+
+.prose-ldb {
+  @apply text-ink-900 leading-relaxed;
+}
+.prose-ldb h1 { @apply text-2xl font-semibold mt-6 mb-3; }
+.prose-ldb h2 { @apply text-xl font-semibold mt-6 mb-3; }
+.prose-ldb h3 { @apply text-lg font-semibold mt-4 mb-2; }
+.prose-ldb p  { @apply my-3; }
+.prose-ldb a  { @apply text-accent underline underline-offset-2; }
+.prose-ldb ul { @apply list-disc ml-6 my-3; }
+.prose-ldb ol { @apply list-decimal ml-6 my-3; }
+.prose-ldb code { @apply font-mono text-sm bg-ink-100 px-1 py-0.5 rounded; }
+.prose-ldb pre  { @apply bg-ink-900 text-ink-50 rounded-card p-4 overflow-x-auto my-4; }
+.prose-ldb pre code { @apply bg-transparent text-ink-50 p-0; }
