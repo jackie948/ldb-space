@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { StudentCard } from '@/components/StudentCard'
 import { MOCK_STUDENTS, isSupabaseConfigured } from '@/lib/mock'
 import { createClient } from '@/lib/supabase/server'
