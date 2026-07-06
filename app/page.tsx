@@ -12,15 +12,6 @@ const CAPABILITIES = [
   { key: 'Growth',   zh: '成长力', body: '快速变化的环境里能持续学习、自我迭代，有"成事儿"心态' },
 ]
 
-const TIMELINE = [
-  { week: '第 0 周', title: '入职 · 开营前作业', detail: '最晚 7.7 全员入职；每人 coding 个人网站' },
-  { week: '第 1 周', title: '开营', detail: '破冰 · 跨职能组队 · 项目机制介绍' },
-  { week: '第 2 周', title: 'AI 实践分享', detail: '加林技术分享 + 草菇 / 阿图 / 埃隆' },
-  { week: '第 3 周', title: '格尔《审美》', detail: '审美判断底层逻辑 · Reference 体系 · AI 时代的品味稀缺性' },
-  { week: '第 5 周', title: '空空《产品》', detail: '从访谈到洞察 · 洞察 → 可执行的设计原则' },
-  { week: '第 8 周', title: '结营', detail: 'Demo Day 8.24–27 · 结营 8.28 · 现场定 offer' },
-]
-
 async function getStudents(): Promise<LDBUser[]> {
   if (!isSupabaseConfigured()) return MOCK_STUDENTS
   const supabase = createClient()
@@ -40,14 +31,14 @@ export default async function Home() {
     <div className="space-y-16">
       {/* Hero */}
       <section className="pt-6">
-        <p className="text-xs tracking-[0.2em] text-ink-400 uppercase">Lab 1327 × 同济设创 · 2026 Summer</p>
+        <p className="text-xs tracking-[0.2em] text-ink-400">Lab 1327 · Design builds｜2026 Summer Camp</p>
         <h1 className="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
           Design <span className="italic text-accent">builds</span>.
           <br />
-          <span className="text-ink-600">不止会想，还会做。</span>
+          <span className="text-ink-600">设计会建造。</span>
         </h1>
         <p className="mt-6 max-w-2xl text-ink-600 leading-relaxed">
-          LDB 是 Lab 1327 与同济设计与创意学院的首届暑期训练营。
+          LDB 是 Lab 1327 与同济大学的首届暑期训练营。
           我们相信 AI 时代，产品设计与工程建造的边界正在消失 ——
           一个人可以用 AI 把想法 ship 出来。
           这两个月，我们想和 20 位同学一起验证这件事。
@@ -68,21 +59,6 @@ export default async function Home() {
             </div>
           ))}
         </div>
-      </section>
-
-      {/* Timeline */}
-      <section>
-        <h2 className="text-sm tracking-[0.2em] text-ink-400 uppercase mb-6">8 周节奏</h2>
-        <ol className="border-l border-ink-200 space-y-6 pl-6">
-          {TIMELINE.map((t) => (
-            <li key={t.week} className="relative">
-              <span className="absolute -left-[31px] top-1.5 w-2 h-2 rounded-full bg-ink-900" />
-              <div className="text-xs text-ink-400">{t.week}</div>
-              <div className="font-medium text-ink-900">{t.title}</div>
-              <div className="text-sm text-ink-600">{t.detail}</div>
-            </li>
-          ))}
-        </ol>
       </section>
 
       {/* Wall */}
