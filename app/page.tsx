@@ -9,7 +9,7 @@ const CAPABILITIES = [
   { key: 'Taste',    zh: '品味',    body: '对产品、视觉、交互有清晰的审美判断力' },
   { key: 'Native',   zh: 'AI 素养', body: 'AI native 的思考与工作方式；把 AI 嵌入日常工作流' },
   { key: 'Thinking', zh: '产品思维', body: '从真实场景抽象问题：洞察 → 设计原则 → 产品决策' },
-  { key: 'Growth',   zh: '发展潜力', body: '快速变化的环境里能持续学习、自我迭代，有"成事儿"心态' },
+  { key: 'Growth',   zh: '成长力', body: '快速变化的环境里能持续学习、自我迭代，有"成事儿"心态' },
 ]
 
 const TIMELINE = [
