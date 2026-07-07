@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Avatar } from './Avatar'
 import { ThemeToggle } from './ThemeToggle'
-import { getCurrentUser, isStaff } from '@/lib/currentUser'
+import { getCurrentUser } from '@/lib/currentUser'
 
 export async function Header() {
   const me = await getCurrentUser()
@@ -13,9 +13,6 @@ export async function Header() {
           LDB｜Lab 1327 · Design builds
         </Link>
         <nav className="flex items-center gap-6 text-sm text-ink-600">
-          <Link href="/feed" className="hover:text-ink-900">Feed</Link>
-          <Link href="/curriculum" className="hover:text-ink-900">课程</Link>
-          {isStaff(me) && <Link href="/admin" className="hover:text-ink-900">观测台</Link>}
           <ThemeToggle />
           {me ? (
             <div className="flex items-center gap-3">
