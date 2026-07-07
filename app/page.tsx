@@ -39,8 +39,7 @@ export default async function Home() {
         </h1>
         <p className="mt-6 max-w-2xl text-ink-600 leading-relaxed">
           LDB 是 Lab 1327 与同济大学的首届暑期训练营。
-          我们相信 AI 时代，产品设计与工程建造的边界正在消失 ——
-          一个人可以用 AI 把想法 ship 出来。
+          我们相信 AI 时代，产品设计与工程建造的边界正在消失。
           这两个月，我们想和 20 位同学一起验证这件事。
         </p>
       </section>
