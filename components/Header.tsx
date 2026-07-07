@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Avatar } from './Avatar'
+import { ThemeToggle } from './ThemeToggle'
 import { getCurrentUser, isStaff } from '@/lib/currentUser'
 
 export async function Header() {
@@ -15,6 +16,7 @@ export async function Header() {
           <Link href="/feed" className="hover:text-ink-900">Feed</Link>
           <Link href="/curriculum" className="hover:text-ink-900">课程</Link>
           {isStaff(me) && <Link href="/admin" className="hover:text-ink-900">观测台</Link>}
+          <ThemeToggle />
           {me ? (
             <div className="flex items-center gap-3">
               <Link href={`/u/${me.handle}`} className="flex items-center gap-2 hover:text-ink-900">

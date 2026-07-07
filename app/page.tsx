@@ -34,8 +34,6 @@ export default async function Home() {
       <section className="pt-6">
         <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
           Design <span className="italic text-accent">builds</span>.
-          <br />
-          <span className="text-ink-600">设计会建造。</span>
         </h1>
         <p className="mt-6 max-w-2xl text-ink-600 leading-relaxed">
           LDB 是 Lab 1327 与同济大学的首届暑期训练营。

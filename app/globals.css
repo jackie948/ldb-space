@@ -4,14 +4,47 @@
 
 :root {
   color-scheme: light;
+  --bg: theme('colors.ink.50');
+  --fg: theme('colors.ink.900');
+  --surface: #ffffff;
+  --border: theme('colors.ink.200');
+  --muted: theme('colors.ink.400');
+  --soft: theme('colors.ink.100');
+  --body: theme('colors.ink.600');
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: #0e0e0d;      /* 深墨黑 */
+  --fg: #f1efe9;      /* 米白 */
+  --surface: #171715;
+  --border: #2c2b28;
+  --muted: #7a776e;
+  --soft: #1f1e1b;
+  --body: #b8b5ac;
 }
 
 html,
 body {
-  background: theme('colors.ink.50');
-  color: theme('colors.ink.900');
+  background: var(--bg);
+  color: var(--fg);
   -webkit-font-smoothing: antialiased;
 }
+
+/* 覆盖 Tailwind 里最常用的类，让它们跟随主题变量 */
+.dark .bg-ink-50   { background-color: var(--bg) !important; }
+.dark .bg-ink-100  { background-color: var(--soft) !important; }
+.dark .bg-white    { background-color: var(--surface) !important; }
+.dark .border-ink-200 { border-color: var(--border) !important; }
+.dark .text-ink-900 { color: var(--fg) !important; }
+.dark .text-ink-600 { color: var(--body) !important; }
+.dark .text-ink-400 { color: var(--muted) !important; }
+.dark .hover\:border-ink-900:hover { border-color: var(--fg) !important; }
+.dark .hover\:text-ink-900:hover { color: var(--fg) !important; }
+.dark .focus\:border-ink-900:focus { border-color: var(--fg) !important; }
+.dark .bg-ink-900   { background-color: var(--fg) !important; color: var(--bg) !important; }
+.dark .text-ink-50  { color: var(--bg) !important; }
+.dark .bg-ink-50\/80 { background-color: color-mix(in oklch, var(--bg) 80%, transparent) !important; }
 
 .prose-ldb {
   @apply text-ink-900 leading-relaxed;
