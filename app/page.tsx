@@ -31,8 +31,7 @@ export default async function Home() {
     <div className="space-y-16">
       {/* Hero */}
       <section className="pt-6">
-        <p className="text-xs tracking-[0.2em] text-ink-400">Lab 1327 · Design builds｜2026 Summer Camp</p>
-        <h1 className="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
           Design <span className="italic text-accent">builds</span>.
           <br />
           <span className="text-ink-600">设计会建造。</span>
