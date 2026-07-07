@@ -37,7 +37,14 @@ export default function LoginPage() {
       }
     } catch (err: any) {
       setStatus('error')
-      setMsg(err?.message ?? 'unknown error')
+      const message =
+        err?.message ||
+        err?.error_description ||
+        err?.error ||
+        (typeof err === 'string' ? err : JSON.stringify(err))
+      setMsg(message)
+      // eslint-disable-next-line no-console
+      console.error('[login] error:', err)
     }
   }
 
