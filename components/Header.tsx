@@ -9,7 +9,7 @@ export async function Header() {
       <div className="mx-auto max-w-6xl px-6 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <span className="inline-block w-2 h-2 rounded-full bg-accent" />
-          LDB · Lab 1327
+          LDB｜Lab 1327 · Design builds
         </Link>
         <nav className="flex items-center gap-6 text-sm text-ink-600">
           <Link href="/feed" className="hover:text-ink-900">Feed</Link>
