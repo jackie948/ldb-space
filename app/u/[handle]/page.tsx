@@ -62,24 +62,13 @@ export default async function UserPage({ params }: { params: { handle: string } 
         <Avatar name={user.name} src={user.avatar_url} seed={user.handle} size="xl" />
         <div className="flex-1 min-w-0">
           <h1 className="text-2xl font-semibold">{user.name}</h1>
-          <div className="mt-1 text-sm text-ink-400">/{user.handle}</div>
           {user.tagline && <p className="mt-3 text-ink-600">{user.tagline}</p>}
           <div className="mt-4 flex flex-wrap gap-1.5 text-[11px]">
-            {user.school     && <span className="px-2 py-0.5 rounded bg-ink-100 text-ink-600">{user.school}</span>}
-            {user.grad_year  && <span className="px-2 py-0.5 rounded bg-ink-100 text-ink-600">{user.grad_year} 届</span>}
-            {user.team_group && <span className="px-2 py-0.5 rounded bg-ink-100 text-ink-600">{user.team_group}</span>}
-            {user.l1_mentor  && <span className="px-2 py-0.5 rounded bg-ink-100 text-ink-600">L1 @{user.l1_mentor}</span>}
+            {user.department  && <span className="px-2 py-0.5 rounded bg-ink-100 text-ink-600">{user.department}</span>}
+            {user.team_number && <span className="px-2 py-0.5 rounded bg-ink-100 text-ink-600">{user.team_number} 组</span>}
           </div>
         </div>
       </header>
-
-      {/* Team project */}
-      {user.team_project && (
-        <section className="mt-8">
-          <h2 className="text-xs tracking-[0.2em] text-ink-400 uppercase mb-2">决赛作品</h2>
-          <p className="text-ink-900">{user.team_project}</p>
-        </section>
-      )}
 
       {/* Links */}
       {user.links && Object.keys(user.links).length > 0 && (

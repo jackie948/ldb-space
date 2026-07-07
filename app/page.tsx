@@ -19,7 +19,8 @@ async function getStudents(): Promise<LDBUser[]> {
     .from('users')
     .select('*')
     .eq('role', 'student')
-    .order('name', { ascending: true })
+    .order('team_number', { ascending: true })
+    .order('name',        { ascending: true })
   if (error || !data) return MOCK_STUDENTS
   return data as LDBUser[]
 }
@@ -65,7 +66,7 @@ export default async function Home() {
           <h2 className="text-sm tracking-[0.2em] text-ink-400 uppercase">学员墙 · {students.length} 人</h2>
           <span className="text-xs text-ink-400">点击进入个人页</span>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {students.map((u) => <StudentCard key={u.id} user={u} />)}
         </div>
       </section>

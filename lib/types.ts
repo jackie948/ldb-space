@@ -12,6 +12,9 @@ export type LDBUser = {
   free_blocks?: Array<{ type: string; title: string; body: string }> | null
   role: UserRole
   cohort?: string | null
+  department?: string | null
+  team_number?: string | null
+  // 以下字段保留以便老数据兼容，但前台不再显示
   school?: string | null
   grad_year?: string | null
   team_group?: string | null
