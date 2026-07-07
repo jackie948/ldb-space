@@ -1,3 +1,6 @@
+// 缓存 30 秒 —— feed 更新相对频繁，30 秒是速度与新鲜的平衡
+export const revalidate = 30
+
 import { createClient } from '@/lib/supabase/server'
 import { isSupabaseConfigured } from '@/lib/mock'
 import { getCurrentUser } from '@/lib/currentUser'

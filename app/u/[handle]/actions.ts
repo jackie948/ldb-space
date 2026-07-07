@@ -51,5 +51,6 @@ export async function saveProfile(handle: string, formData: FormData) {
   if (error) throw new Error(error.message)
 
   revalidatePath(`/u/${handle}`)
+  revalidatePath('/')  // 学员墙上的头像/tagline 也可能变了
   redirect(`/u/${handle}`)
 }

@@ -1,4 +1,5 @@
-export const dynamic = 'force-dynamic'
+// 缓存 60 秒 —— 学员墙不是实时业务，60 秒延迟能接受，页面速度从 2-3s 降到 300ms
+export const revalidate = 60
 
 import { StudentCard } from '@/components/StudentCard'
 import { MOCK_STUDENTS, isSupabaseConfigured } from '@/lib/mock'

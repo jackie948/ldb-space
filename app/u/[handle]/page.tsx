@@ -1,3 +1,6 @@
+// 缓存 60 秒 —— 个人页更新不频繁
+export const revalidate = 60
+
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Markdown } from '@/components/Markdown'

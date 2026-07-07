@@ -23,6 +23,7 @@ export async function Header() {
                 <Avatar name={me.name} src={me.avatar_url} seed={me.handle} size="sm" />
                 <span>{me.name}</span>
               </Link>
+              <Link href="/settings" className="text-ink-400 hover:text-ink-900 text-xs">改密码</Link>
               <form action="/auth/signout" method="post">
                 <button type="submit" className="text-ink-400 hover:text-ink-900 text-xs">登出</button>
               </form>
