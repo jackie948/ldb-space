@@ -35,11 +35,21 @@ export default async function Home() {
         <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">
           Design <span className="italic text-accent">builds</span>.
         </h1>
-        <p className="mt-6 max-w-2xl text-ink-600 leading-relaxed">
-          LDB 是 Lab 1327 与同济大学的首届暑期训练营。
-          我们相信 AI 时代，产品设计与工程建造的边界正在消失。
-          这两个月，我们想和 20 位同学一起验证这件事。
-        </p>
+        <div className="mt-8 max-w-2xl space-y-4 text-ink-600 leading-relaxed">
+          <p className="font-medium text-ink-900">为什么是 Design builds？</p>
+          <p>
+            过去，"产品设计" 和 "工程建造" 是两件事 ——
+            产品设计负责想清楚，工程负责做出来。
+          </p>
+          <p>
+            AI 时代，这条边界正在消失。一个人可以用 AI 把想法 ship 出来。
+            产品设计不再只是需求方，而且就"会"建造。
+          </p>
+          <p>
+            这就是 <span className="italic">Design builds</span>，
+            Lab 1327 想找的是什么样的人 —— 不止会想，还会做。
+          </p>
+        </div>
       </section>
 
       {/* Four capabilities */}
