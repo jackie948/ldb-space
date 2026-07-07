@@ -11,6 +11,20 @@ export async function saveProfile(handle: string, formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
+  // 找目标同学
+  const { data: target } = await supabase
+    .from('users').select('id').eq('handle', handle).maybeSingle()
+  if (!target) redirect(`/u/${handle}`)
+
+  // 找当前登录者
+  const { data: me } = await supabase
+    .from('users').select('id, role').eq('id', user.id).maybeSingle()
+  if (!me) redirect('/login')
+
+  // 只允许"改自己"或"admin 改别人"
+  const canEdit = me.id === target.id || me.role === 'admin'
+  if (!canEdit) redirect(`/u/${handle}`)
+
   const tagline = String(formData.get('tagline') ?? '')
   const bio     = String(formData.get('bio') ?? '')
   const avatar  = String(formData.get('avatar_url') ?? '')
@@ -32,7 +46,7 @@ export async function saveProfile(handle: string, formData: FormData) {
   const { error } = await supabase
     .from('users')
     .update({ tagline, bio, avatar_url: avatar || null, links, free_blocks })
-    .eq('id', user.id)
+    .eq('id', target.id)
 
   if (error) throw new Error(error.message)
 
