@@ -20,6 +20,12 @@ const cacheStore = new Map<string, { at: number; data: Cache }>()
 const inflightStore = new Map<string, Promise<Cache | null>>()
 const CACHE_MS = 60 * 1000
 
+// 编辑保存后清缓存,让个人页看到最新
+export function clearProfileCache(handle: string) {
+  cacheStore.delete(handle)
+  inflightStore.delete(handle)
+}
+
 // 悬停/进入前提前加载数据 —— 由 StudentCard 触发
 export function prefetchProfile(handle: string) {
   const c = cacheStore.get(handle)
