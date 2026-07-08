@@ -15,25 +15,42 @@ export function HeaderUser() {
     const supabase = createClient()
     let mounted = true
 
-    async function load() {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!mounted) return
-      if (!user) { setState('guest'); return }
-
+    async function loadProfile(userId: string) {
       const { data } = await supabase
         .from('users').select('id, handle, name, avatar_url, role')
-        .eq('id', user.id).maybeSingle()
+        .eq('id', userId).maybeSingle()
       if (!mounted) return
       if (data) setState(data as LDBUser)
       else setState('guest')
     }
 
-    load()
-    return () => { mounted = false }
+    async function initial() {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!mounted) return
+      if (!user) { setState('guest'); return }
+      await loadProfile(user.id)
+    }
+
+    // 首次加载
+    initial()
+
+    // 监听登录 / 登出事件 —— 状态变了立刻刷新 Header
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!mounted) return
+      if (session?.user) {
+        loadProfile(session.user.id)
+      } else {
+        setState('guest')
+      }
+    })
+
+    return () => {
+      mounted = false
+      sub.subscription.unsubscribe()
+    }
   }, [])
 
   if (state === 'loading') {
-    // 占位一个圆圈,避免布局跳动
     return <span className="w-7 h-7 rounded-full bg-ink-100 border border-ink-200 animate-pulse" />
   }
 

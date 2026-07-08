@@ -25,8 +25,8 @@ export default function LoginPage() {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
         setStatus('idle')
-        router.push('/')
-        router.refresh()
+        // 用 window.location 跳转 —— 完全刷新页面,所有客户端缓存都重置
+        window.location.href = '/'
       } else {
         const { error } = await supabase.auth.signInWithOtp({
           email,
