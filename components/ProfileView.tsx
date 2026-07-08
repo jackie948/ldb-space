@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { Markdown } from './Markdown'
 import { Avatar } from './Avatar'
-import { createClient } from '@/lib/supabase/browser'
 import type { LDBUser, LDBPost } from '@/lib/types'
 
 const LINK_LABELS: Record<string, string> = {
@@ -18,7 +17,47 @@ const LINK_LABELS: Record<string, string> = {
 // 单次会话内缓存,避免重复请求
 type Cache = { user: LDBUser | null; posts: LDBPost[]; canEdit: boolean }
 const cacheStore = new Map<string, { at: number; data: Cache }>()
+const inflightStore = new Map<string, Promise<Cache | null>>()
 const CACHE_MS = 60 * 1000
+
+// 悬停/进入前提前加载数据 —— 由 StudentCard 触发
+export function prefetchProfile(handle: string) {
+  const c = cacheStore.get(handle)
+  if (c && Date.now() - c.at < CACHE_MS) return
+  if (inflightStore.has(handle)) return
+
+  const p = (async (): Promise<Cache | null> => {
+    const { createClient } = await import('@/lib/supabase/browser')
+    const supabase = createClient()
+
+    const [{ data: userRow }, { data: { user: authUser } }] = await Promise.all([
+      supabase.from('users').select('*').eq('handle', handle).maybeSingle(),
+      supabase.auth.getUser(),
+    ])
+    if (!userRow) return null
+    const user = userRow as LDBUser
+
+    const postsP = supabase
+      .from('posts').select('*')
+      .eq('author_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(20)
+    const meRoleP = authUser
+      ? supabase.from('users').select('id, role').eq('id', authUser.id).maybeSingle()
+      : Promise.resolve({ data: null })
+
+    const [{ data: postsData }, { data: meData }] = await Promise.all([postsP, meRoleP])
+    const posts = (postsData as LDBPost[]) ?? []
+    const canEdit = !!meData && ((meData as any).id === user.id || (meData as any).role === 'admin')
+
+    const next: Cache = { user, posts, canEdit }
+    cacheStore.set(handle, { at: Date.now(), data: next })
+    return next
+  })()
+
+  inflightStore.set(handle, p)
+  p.finally(() => { inflightStore.delete(handle) })
+}
 
 export function ProfileView({ handle }: { handle: string }) {
   const [data, setData] = useState<Cache | null>(() => {
@@ -31,38 +70,14 @@ export function ProfileView({ handle }: { handle: string }) {
   useEffect(() => {
     let mounted = true
     ;(async () => {
-      const supabase = createClient()
-
-      // 并行拿 user + auth
-      const [{ data: userRow }, { data: { user: authUser } }] = await Promise.all([
-        supabase.from('users').select('*').eq('handle', handle).maybeSingle(),
-        supabase.auth.getUser(),
-      ])
+      // 触发预取(可能已经由 hover 提前触发过,会命中 inflight)
+      prefetchProfile(handle)
+      // 等待正在进行的请求完成 / 或直接读缓存
+      const inflight = inflightStore.get(handle)
+      const result = inflight ? await inflight : (cacheStore.get(handle)?.data ?? null)
       if (!mounted) return
-      if (!userRow) { setNotFound(true); return }
-
-      const user = userRow as LDBUser
-
-      // 拿动态 + me 的 role(如果登录了)
-      const postsP = supabase
-        .from('posts').select('*')
-        .eq('author_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(20)
-
-      const meRoleP = authUser
-        ? supabase.from('users').select('id, role').eq('id', authUser.id).maybeSingle()
-        : Promise.resolve({ data: null })
-
-      const [{ data: postsData }, { data: meData }] = await Promise.all([postsP, meRoleP])
-      if (!mounted) return
-
-      const posts = (postsData as LDBPost[]) ?? []
-      const canEdit = !!meData && ((meData as any).id === user.id || (meData as any).role === 'admin')
-
-      const next: Cache = { user, posts, canEdit }
-      cacheStore.set(handle, { at: Date.now(), data: next })
-      setData(next)
+      if (!result) { setNotFound(true); return }
+      setData(result)
     })()
     return () => { mounted = false }
   }, [handle])

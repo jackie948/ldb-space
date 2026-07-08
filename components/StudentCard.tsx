@@ -1,11 +1,18 @@
+'use client'
+
 import Link from 'next/link'
 import { Avatar } from './Avatar'
+import { prefetchProfile } from './ProfileView'
 import type { LDBUser } from '@/lib/types'
 
 export function StudentCard({ user }: { user: LDBUser }) {
   return (
     <Link
       href={`/u/${user.handle}`}
+      // 鼠标悬停或触屏点下前 200ms 就开始拉数据 —— 用户等不到 loading 就能看到内容
+      onMouseEnter={() => prefetchProfile(user.handle)}
+      onFocus={() => prefetchProfile(user.handle)}
+      onTouchStart={() => prefetchProfile(user.handle)}
       className="group block rounded-card border border-ink-200 bg-white p-5 transition hover:border-ink-900 hover:-translate-y-0.5"
     >
       <div className="flex items-start gap-4">
