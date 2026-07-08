@@ -1,32 +1,8 @@
-import { NextResponse, type NextRequest } from 'next/server'
-import { createServerClient, type CookieOptions } from '@supabase/ssr'
-
-export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({ request: { headers: request.headers } })
-
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  if (!url || !anon) return response
-
-  const supabase = createServerClient(url, anon, {
-    cookies: {
-      get: (name: string) => request.cookies.get(name)?.value,
-      set: (name: string, value: string, options: CookieOptions) => {
-        request.cookies.set({ name, value, ...options })
-        response = NextResponse.next({ request: { headers: request.headers } })
-        response.cookies.set({ name, value, ...options })
-      },
-      remove: (name: string, options: CookieOptions) => {
-        request.cookies.set({ name, value: '', ...options })
-        response = NextResponse.next({ request: { headers: request.headers } })
-        response.cookies.set({ name, value: '', ...options })
-      },
-    },
-  })
-  await supabase.auth.getUser()
-  return response
-}
+// 关掉 middleware —— 之前每次请求都会跑 supabase.auth.getUser() 一次 (200-400ms)
+// 认证放到客户端和 server actions 里处理，页面本身不再阻塞
+export function middleware() { return }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)).*)'],
+  // 只匹配 /auth 相关路由（如果需要 session 刷新）
+  matcher: [],
 }

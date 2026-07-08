@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import { Avatar } from './Avatar'
 import { ThemeToggle } from './ThemeToggle'
-import { getCurrentUser } from '@/lib/currentUser'
+import { HeaderUser } from './HeaderUser'
 
-export async function Header() {
-  const me = await getCurrentUser()
+// Header 现在是纯静态渲染 —— 不再阻塞页面加载去查 auth
+// 用户信息由 <HeaderUser> 客户端组件异步加载并原地渲染
+export function Header() {
   return (
     <header className="border-b border-ink-200 bg-ink-50/80 backdrop-blur sticky top-0 z-10">
       <div className="mx-auto max-w-6xl px-6 h-14 flex items-center justify-between">
@@ -14,20 +14,7 @@ export async function Header() {
         </Link>
         <nav className="flex items-center gap-6 text-sm text-ink-600">
           <ThemeToggle />
-          {me ? (
-            <div className="flex items-center gap-3">
-              <Link href={`/u/${me.handle}`} className="flex items-center gap-2 hover:text-ink-900">
-                <Avatar name={me.name} src={me.avatar_url} seed={me.handle} size="sm" />
-                <span>{me.name}</span>
-              </Link>
-              <Link href="/settings" className="text-ink-400 hover:text-ink-900 text-xs">改密码</Link>
-              <form action="/auth/signout" method="post">
-                <button type="submit" className="text-ink-400 hover:text-ink-900 text-xs">登出</button>
-              </form>
-            </div>
-          ) : (
-            <Link href="/login" className="hover:text-ink-900">登录</Link>
-          )}
+          <HeaderUser />
         </nav>
       </div>
     </header>
