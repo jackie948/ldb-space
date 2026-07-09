@@ -65,7 +65,7 @@ const SCHEDULE = [
   {
     week: '第 4 周',
     type: '专业技能',
-    topic: '格尔《审美》',
+    topic: '格尔 · 审美',
     actions: [
       '审美判断的底层逻辑、Reference 体系搭建',
       '如何在 AI 时代保持「品味的稀缺性」',
@@ -76,7 +76,7 @@ const SCHEDULE = [
   {
     week: '第 6 周',
     type: '专业技能',
-    topic: '空空《产品》',
+    topic: '空空 · 产品',
     actions: [
       '从访谈到洞察',
       '如何把洞察翻译成可执行的产品原则',
