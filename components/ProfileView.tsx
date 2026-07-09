@@ -15,7 +15,7 @@ const LINK_LABELS: Record<string, string> = {
 }
 
 // 单次会话内缓存,避免重复请求
-type Cache = { user: LDBUser | null; posts: LDBPost[]; canEdit: boolean }
+type Cache = { user: LDBUser; posts: LDBPost[]; canEdit: boolean }
 const cacheStore = new Map<string, { at: number; data: Cache }>()
 const inflightStore = new Map<string, Promise<Cache | null>>()
 const CACHE_MS = 60 * 1000
